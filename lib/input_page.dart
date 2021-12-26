@@ -22,27 +22,7 @@ class InputPage extends StatefulWidget {
 
 // Stateful Widget, so we can change the properties later
 class _InputPageState extends State<InputPage> {
-  Color maleCardColor = inactiveCardColor;
-  Color femaleCardColor = inactiveCardColor;
-
-  // 1 = male, 2 = female
-  void updateColor(Gender selectedGender) {
-    if (selectedGender == Gender.male) {
-      if (maleCardColor == inactiveCardColor) {
-        maleCardColor = activeCardColor;
-        femaleCardColor = inactiveCardColor;
-      } else {
-        maleCardColor = inactiveCardColor;
-      }
-    } else if (selectedGender == Gender.female) {
-      if (femaleCardColor == inactiveCardColor) {
-        maleCardColor = inactiveCardColor;
-        femaleCardColor = activeCardColor;
-      } else {
-        femaleCardColor = inactiveCardColor;
-      }
-    }
-  }
+  Gender selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +41,13 @@ class _InputPageState extends State<InputPage> {
                         setState(() {
                           // change the card background color
                           print('Male card was pressed');
-                          updateColor(Gender.male);
+                          selectedGender = Gender.male;
                         });
                       },
                       child: ReusableCard(
-                        color: maleCardColor,
+                        color: selectedGender == Gender.male
+                            ? activeCardColor
+                            : inactiveCardColor,
                         cardChild: IconContent(
                           label: 'MALE',
                           icon: FontAwesomeIcons.mars,
@@ -79,11 +61,13 @@ class _InputPageState extends State<InputPage> {
                         setState(() {
                           // change the card background color
                           print('Female card was pressed');
-                          updateColor(Gender.female);
+                          selectedGender = Gender.female;
                         });
                       },
                       child: ReusableCard(
-                        color: femaleCardColor,
+                        color: selectedGender == Gender.female
+                            ? activeCardColor
+                            : inactiveCardColor,
                         cardChild: IconContent(
                           label: 'FEMALE',
                           icon: FontAwesomeIcons.venus,
